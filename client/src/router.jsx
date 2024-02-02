@@ -9,6 +9,7 @@ import Global from "./layouts/Global.jsx";
 import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,22 @@ const router = createBrowserRouter([
             path: "/",
             element: <Home />,
           },
+          // {
+          //   path: "/spotify",
+          //   element: <Spotify />,
+          // },
+          // {
+          //   path: "/scrapper",
+          //   element: <Scrapper />,
+          // },
+          // {
+          //   path: "/youtube",
+          //   element: <Youtube />,
+          // },
+          // {
+          //   path: "/youtube/channel/:id",
+          //   element: <Channel />,
+          // },
         ],
       },
       {
@@ -44,7 +61,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
-// export
 export default router;

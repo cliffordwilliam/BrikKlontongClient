@@ -10,19 +10,16 @@ const apiSlice = createSlice({
   },
   reducers: {
     start: (state, action) => {
-      console.log("START", action.payload);
       state.loading = true;
       state.data = null;
       state.error = null;
     },
     ok: (state, action) => {
-      console.log("OK", action.payload);
       state.loading = false;
       state.data = action.payload;
       state.error = null;
     },
     bad: (state, action) => {
-      console.log("BAD", action.payload);
       state.loading = false;
       state.data = null;
       state.error = action.payload;
@@ -32,20 +29,42 @@ const apiSlice = createSlice({
 
 export const { start, ok, bad } = apiSlice.actions;
 
-export function request({ method, url, options, callback }) {
+export function request({
+  method,
+  url,
+  options,
+  callback,
+  isLoader = false,
+  isOk = false,
+}) {
   return async function (dispatch) {
     try {
+      if (isLoader) {
+        document.querySelector("dialog").showModal();
+      }
       dispatch(start());
       const res = await axios({
         method,
         url,
         ...options,
-        data: options.data,
+        data: options && options.data,
       });
+      document.querySelector("dialog").close();
       dispatch(ok(res.data));
-      callback(res.data);
+      if (callback) {
+        callback(res.data);
+      }
+      if (isOk) {
+        document.querySelector("dialog").showModal();
+      }
     } catch (error) {
-      dispatch(bad(error.response.data.message));
+      console.log(error);
+      if (error.response === undefined) {
+        dispatch(bad("error"));
+      } else {
+        dispatch(bad(error.response.data.message));
+      }
+      document.querySelector("dialog").showModal();
     }
   };
 }

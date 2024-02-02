@@ -1,13 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import router from "./router.jsx";
+// router
 import { RouterProvider } from "react-router-dom";
+import router from "./router.jsx";
+// store
 import { Provider } from "react-redux";
-import { store } from "./store/index.js";
+import { store } from "./store";
+// theme
+import ThemeProvider from "./context/ThemeContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <RouterProvider router={router} />
-  </Provider>
+  <ThemeProvider>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </ThemeProvider>
 );

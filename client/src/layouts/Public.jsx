@@ -1,15 +1,29 @@
+import React from "react";
 import { Outlet } from "react-router-dom";
-import Footer from "../components/Footer.jsx";
-import Header from "../components/Header.jsx";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import logo from "../assets/william-logo.svg";
 
-const Public = () => {
+export default function Private() {
+  const links = [
+    { name: "Sign up", endpoint: "/register" },
+    { name: "Login", endpoint: "/login" },
+  ];
+  const sections = [
+    {
+      title: "Navigations",
+      links: links,
+    },
+  ];
   return (
     <>
-      <Header />
+      <Header links={links} isLogout={false} logo={logo}></Header>
       <Outlet />
-      <Footer />
+      <Footer
+        sections={sections}
+        logo={logo}
+        slogan="Passionate Indonesian fullstack developer."
+      ></Footer>
     </>
   );
-};
-
-export default Public;
+}
