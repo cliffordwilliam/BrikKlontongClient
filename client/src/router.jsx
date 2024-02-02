@@ -10,6 +10,9 @@ import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import ProductDetail from "./pages/ProductDetail.jsx";
+import AddProduct from "./pages/AddProduct.jsx";
+import UpdateProduct from "./pages/UpdateProduct.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,14 +31,18 @@ const router = createBrowserRouter([
             path: "/",
             element: <Home />,
           },
-          // {
-          //   path: "/spotify",
-          //   element: <Spotify />,
-          // },
-          // {
-          //   path: "/scrapper",
-          //   element: <Scrapper />,
-          // },
+          {
+            path: "/product/:productId",
+            element: <ProductDetail />,
+          },
+          {
+            path: "/add-product",
+            element: <AddProduct />,
+          },
+          {
+            path: "/update-product/:productId",
+            element: <UpdateProduct />,
+          },
           // {
           //   path: "/youtube",
           //   element: <Youtube />,

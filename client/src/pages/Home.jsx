@@ -40,10 +40,23 @@ export default function Home() {
   useEffect(() => {
     getProducts();
   }, [page]);
-  function onProductClicked(e, id) {
-    e.preventDefault();
-    console.log(id);
-  }
+  const delProduct = (productId) => {
+    const token = localStorage.getItem("token");
+    dispatch(
+      request({
+        method: "DELETE",
+        url: `${c.baseUrl}/product/${productId}`,
+        options: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        isLoader: true,
+        isOk: true,
+        callback: getProducts,
+      })
+    );
+  };
   return (
     <main>
       <section>
@@ -150,113 +163,137 @@ export default function Home() {
           </form>
           {/* pagination buttons */}
           <div className="💪 📏f">
-            <button
-              className="🛎️"
-              onClick={(e) => {
-                e.preventDefault();
-                // -page
-                setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
-              }}
-            >
-              &lt;
-            </button>
-            <button
-              className={`${page === 1 ? "🛎️ a" : "🛎️"}`}
-              onClick={(e) => {
-                e.preventDefault();
-                // page = 1
-                setPage(1);
-              }}
-            >
-              1
-            </button>
-            {/* extra 3 backs */}
-            {/* 3rd back */}
-            {page - 3 > 1 && <p>...</p>}
-            {/* 2nd back */}
-            {page - 2 > 1 && (
-              <button
-                className="🛎️"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPage(page - 2);
+            <div>
+              <p>Pages:</p>
+              <div className="💪">
+                {/* back */}
+                <button
+                  className="🛎️"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // -page
+                    setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
+                  }}
+                >
+                  &lt;
+                </button>
+                {/* first */}
+                <button
+                  className={`${page === 1 ? "🛎️ a" : "🛎️"}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // page = 1
+                    setPage(1);
+                  }}
+                >
+                  1
+                </button>
+                {/* extra 3 backs */}
+                {/* 3rd back */}
+                {page - 3 > 1 && <p>...</p>}
+                {/* 2nd back */}
+                {page - 2 > 1 && (
+                  <button
+                    className="🛎️"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPage(page - 2);
+                    }}
+                  >
+                    {page - 2}
+                  </button>
+                )}
+                {/* 1st back */}
+                {page - 1 > 1 && (
+                  <button
+                    className={"🛎️"}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPage(page - 1);
+                    }}
+                  >
+                    {page - 1}
+                  </button>
+                )}
+                {/* decor if not on 1 or total page */}
+                {page !== 1 && page !== totalPage && (
+                  <button className="🛎️ a">{page}</button>
+                )}
+                {/* extra 3 fronts */}
+                {/* 1st front */}
+                {page + 1 < totalPage && (
+                  <button
+                    className={"🛎️"}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // page = 1
+                      setPage(page + 1);
+                    }}
+                  >
+                    {page + 1}
+                  </button>
+                )}
+                {/* 2nd front */}
+                {page + 2 < totalPage && (
+                  <button
+                    className="🛎️"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // page = 1
+                      setPage(page + 2);
+                    }}
+                  >
+                    {page + 2}
+                  </button>
+                )}
+                {/* 3rd front */}
+                {page + 3 < totalPage && <p>...</p>}
+                {/* last */}
+                <button
+                  className={`${page === totalPage ? "🛎️ a" : "🛎️"}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // page = totalPage
+                    setPage(totalPage);
+                  }}
+                >
+                  {totalPage}
+                </button>
+                {/* next */}
+                <button
+                  className="🛎️"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // +page
+                    setPage((prevPage) =>
+                      prevPage < totalPage ? prevPage + 1 : totalPage
+                    );
+                  }}
+                >
+                  &gt;
+                </button>
+              </div>
+            </div>
+            {/* jump */}
+            <div>
+              <p>Jump:</p>
+              <select
+                id="jump"
+                name="jump"
+                onChange={(e) => {
+                  setPage(e.target.value);
                 }}
+                value={page}
               >
-                {page - 2}
-              </button>
-            )}
-            {/* 1st back */}
-            {page - 1 > 1 && (
-              <button
-                className={"🛎️"}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPage(page - 1);
-                }}
-              >
-                {page - 1}
-              </button>
-            )}
-            {/* decor if not on 1 or total page */}
-            {page !== 1 && page !== totalPage && (
-              <button className="🛎️ a">{page}</button>
-            )}
-            {/* extra 3 fronts */}
-            {/* 1st front */}
-            {page + 1 < totalPage && (
-              <button
-                className={"🛎️"}
-                onClick={(e) => {
-                  e.preventDefault();
-                  // page = 1
-                  setPage(page + 1);
-                }}
-              >
-                {page + 1}
-              </button>
-            )}
-            {/* 2nd front */}
-            {page + 2 < totalPage && (
-              <button
-                className="🛎️"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // page = 1
-                  setPage(page + 2);
-                }}
-              >
-                {page + 2}
-              </button>
-            )}
-            {/* 3rd front */}
-            {page + 3 < totalPage && <p>...</p>}
-            <button
-              className={`${page === totalPage ? "🛎️ a" : "🛎️"}`}
-              onClick={(e) => {
-                e.preventDefault();
-                // page = totalPage
-                setPage(totalPage);
-              }}
-            >
-              {totalPage}
-            </button>
-            <button
-              className="🛎️"
-              onClick={(e) => {
-                e.preventDefault();
-                // +page
-                setPage((prevPage) =>
-                  prevPage < totalPage ? prevPage + 1 : totalPage
-                );
-              }}
-            >
-              &gt;
-            </button>
+                {[...Array(totalPage).keys()].map((pageNumber) => (
+                  <option key={pageNumber + 1} value={pageNumber + 1}>
+                    {pageNumber + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <ProductList
-            products={products}
-            onProductClicked={onProductClicked}
-          />
+          <ProductList products={products} productDeleteClicked={delProduct} />
         </div>
       </section>
     </main>

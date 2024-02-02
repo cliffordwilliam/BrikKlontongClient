@@ -131,12 +131,16 @@ input[type="text"],
 input[type="number"],
 input[type="email"],
 input[type="password"],
+input[type="file"],
 select {
   box-sizing: border-box;
   padding: 0.5rem 1rem;
   display: block;
   border: 1px solid var(--l4);
   border-radius: 0.5rem;
+}
+input[type="file"] {
+  color: var(--text-color);
 }
 section {
   padding: 3rem 0;

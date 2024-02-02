@@ -1,7 +1,7 @@
 import React from "react";
 import ProductCard from "./ProductCard.jsx";
 
-const ProductList = ({ products, onProductClicked }) => {
+const ProductList = ({ products, productDeleteClicked }) => {
   return (
     <div className="👆7 👇5 🪟 📏f fadeInUp">
       {products.length > 0 ? (
@@ -9,7 +9,7 @@ const ProductList = ({ products, onProductClicked }) => {
           <ProductCard
             key={index}
             product={product}
-            onProductClicked={onProductClicked}
+            productDeleteClicked={productDeleteClicked}
           />
         ))
       ) : (

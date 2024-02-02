@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const ProductCard = ({ product, onProductClicked }) => {
+const ProductCard = ({ product, productDeleteClicked }) => {
   return (
     <div className="🃏 💪⬇️">
       <img
@@ -15,14 +16,23 @@ const ProductCard = ({ product, onProductClicked }) => {
       />
       <h3 className="👇2">{product.name}</h3>
       <p className="👇4">{product.description}</p>
-      <button
-        className="🛎️ 👆a"
-        onClick={(e) => {
-          onProductClicked(e, product.id);
-        }}
-      >
-        See Detail
-      </button>
+      <div className="💪 👆a">
+        <Link className="🛎️" to={`product/${product.id}`}>
+          Detail
+        </Link>
+        <Link className="🛎️" to={`update-product/${product.id}`}>
+          Update
+        </Link>
+        <button
+          className="🛎️"
+          onClick={(e) => {
+            e.preventDefault();
+            productDeleteClicked(product.id);
+          }}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

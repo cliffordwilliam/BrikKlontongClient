@@ -8,7 +8,7 @@ import c from "../c.js";
 export default function Private() {
   const links = [
     { name: "Home", endpoint: "/" },
-    // { name: "Spotify", endpoint: c.baseSpotifyUrl },
+    { name: "Add Product", endpoint: "/add-product" },
     // { name: "Scrapper", endpoint: "/scrapper" },
     // { name: "Youtube", endpoint: "/youtube" },
   ];
